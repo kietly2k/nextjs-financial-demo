@@ -60,6 +60,8 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
+    // Start executing all data fetches at the same time, which can lead to performance gains.
+    // One disadvantage of relying only on this JavaScript pattern: what happens if one data request is slower than all the others?
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
